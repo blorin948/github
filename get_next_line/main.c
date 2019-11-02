@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/26 17:14:00 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/31 22:48:07 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 22:52:42 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,10 +18,15 @@
 
 int main()
 {
+	int i = 0;
 	int fd = open("salut.txt", O_RDONLY);
 	char *line;
+	while (i < 3)
+	{
 	get_next_line(fd, &line);
 	printf("%s\n", line);
+	i++;
+	}
 	free(line);
 	close(fd);
 }
