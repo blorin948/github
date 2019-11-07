@@ -6,19 +6,20 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/23 17:39:20 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/02 22:53:02 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/07 02:04:30 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *out_slash(char *save)
+char	*out_slash(char *save)
 {
-	int i;
-	char *str;
-	int a;
+	int		i;
+	char	*str;
+	int		a;
 
+	str = NULL;
 	i = 0;
 	a = 0;
 	while (save[i] != '\n' && save[i] != '\0')
@@ -28,67 +29,64 @@ char *out_slash(char *save)
 	}
 	while (save[a] != '\0')
 		a++;
-	if (!(str = malloc(sizeof(char) * a + 1)))
+	if (!(str = malloc(sizeof(char) * (a + 1))))
 		return (0);
 	i++;
 	a = 0;
 	while (save[i] != '\0')
-	{
-		str[a] = save[i];
-		i++;
-		a++;
-	}
+		str[a++] = save[i++];
+	str[a] = '\0';
 	return (str);
 }
 
-char	*ft_strdup(char *src)
+char	*ft_bzero(char *s, int n)
 {
-	char	*dest;
-	int		i;
+	int i;
 
 	i = 0;
-	while (src[i] != '\n')
-		i++;
-	if (!(dest = malloc(sizeof(char) * (i + 1))))
-		return (0);
-	i = 0;
-	while (src[i] != '\n')
+	n++;
+	while (n--)
 	{
-		dest[i] = src[i];
+		s[i] = '\0';
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (s);
 }
 
-
-int get_next_line(int fd, char **line)
+int		check_error(int fd, char **line)
 {
-	static char *save;
-	int ret;
-	char buf[BUFFER_SIZE + 1];
+	if (line == NULL || BUFFER_SIZE <= 0)
+		return (0);
+	if (fd == -1)
+		return (-1);
+	return (2);
+}
 
+int		get_next_line(int fd, char **line)
+{
+	static char	*save = NULL;
+	int			ret;
+	char		buf[BUFFER_SIZE + 1];
+
+	ft_bzero(buf, BUFFER_SIZE);
 	ret = 0;
-	while (ret >= 0)
+	if (check_error(fd, line) != 2)
+		return (-1);
+	*line = ft_strdup(save);
+	if ((get_slash(save) == 1) && (save = out_slash(save)))
+		return (1);
+	while ((ret = read(fd, buf, BUFFER_SIZE) > 0))
 	{
-		if (get_slash(save) == 0)
-		{
-			ret = read(fd, buf, BUFFER_SIZE);
-			buf[BUFFER_SIZE] = '\0';
-			save = ft_strjoin(save, buf);
-		}
+		buf[BUFFER_SIZE] = '\0';
+		save = ft_strjoin(save, buf);
 		if (get_slash(save) == 1)
 		{
 			*line = ft_strdup(save);
 			save = out_slash(save);
 			return (1);
 		}
-		if (ret == 0 || ret != BUFFER_SIZE)
-		{
-			free(save);
-			return (0);
-		}
-		ret = 0;
 	}
-	return (-1);
+	free(save);
+	save = NULL;
+	return (0);
 }
