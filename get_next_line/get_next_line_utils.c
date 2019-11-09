@@ -1,95 +1,103 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_lines_utils.c                           .::    .:/ .      .::   */
+/*   get_next_line_utils.c                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/10/23 18:28:53 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/06 23:28:42 by blorin      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/07 23:32:01 by blorin       #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/09 18:17:51 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int			get_slash(char *buf)
+int		ft_strlen(char *s)
 {
 	int i;
 
 	i = 0;
-	if (buf == NULL)
-		return (0);
-	while (buf[i] != '\0')
-	{
-		if (buf[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int			ft_strlen(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-char		*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	char	*str;
 	int		a;
 
-	str = NULL;
 	a = 0;
-	i = 0;
 	if (s1 == NULL)
-		return (s2);
+		i = ft_strlen(s2);
 	else
 		i = ft_strlen(s1) + ft_strlen(s2);
 	if (!(str = malloc(sizeof(char) * (i + 1))))
-		return (0);
-	i = 0;
-	if (!(s1 == NULL))
 	{
-		while (s1[a] != '\0')
-			str[i++] = s1[a++];
-		a = 0;
+		ft_free(s1);
+		ft_free(s2);
+		return (0);
 	}
+	i = 0;
+	while (s1 && s1[a] != '\0')
+		str[i++] = s1[a++];
+	a = 0;
 	while (s2[a] != '\0')
 		str[i++] = s2[a++];
 	str[i] = '\0';
 	return (str);
 }
 
-char		*ft_strdup(char *src)
+void	ft_free(char *s)
+{
+	if (s)
+	{
+		free(s);
+		s = NULL;
+	}
+}
+
+char	*ft_strdup_n(char *src)
 {
 	char	*dest;
 	int		i;
 
-	dest = NULL;
 	i = 0;
-	if (src != NULL)
-	{
-		while (src[i] != '\n' && src[i] != '\0')
-			i++;
-	}
+	while (src && src[i] != '\0' && src[i] != '\n')
+		i++;
 	if (!(dest = malloc(sizeof(char) * (i + 1))))
-		return (0);
-	i = 0;
-	if (src != NULL)
 	{
-		while (src[i] != '\n' && src[i] != '\0')
-		{
-			dest[i] = src[i];
-			i++;
-		}
+		ft_free(src);
+		return (0);
+	}
+	i = 0;
+	while (src && src[i] != '\n' && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+int		get_n(char *save)
+{
+	int i;
+	int a;
+
+	a = 0;
+	i = 0;
+	if (save == NULL)
+		return (0);
+	while (save[i] != '\0')
+	{
+		if (save[i] == '\n')
+			a++;
+		i++;
+	}
+	if (a > 0)
+		return (1);
+	return (0);
 }
