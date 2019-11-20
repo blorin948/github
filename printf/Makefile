@@ -6,14 +6,27 @@
 #    By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/11/16 14:41:03 by blorin       #+#   ##    ##    #+#        #
-#    Updated: 2019/11/16 14:44:51 by blorin      ###    #+. /#+    ###.fr      #
+#    Updated: 2019/11/20 15:45:51 by blorin      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
-SRC = convert_c_s_d.c\
-	  ft_printf.c\
-	  ftc1.c\
+SRC = check_flags2.c\
+	convert_c.c\
+	convert_hexa.c\
+	convert_p.c\
+	convert_pourcent.c\
+	convert_s.c\
+	convert_type_x.c\
+	convert_u_d.c\
+	convert_x.c\
+	flags_pourcent.c\
+	ft_printf.c\
+	ftc1.c\
+	ftc2.c\
+	parse.c\
+	write_flags.c\
+	putnbr.c\
 
 OBJS = ${SRC:.c=.o}
 

@@ -1,43 +1,55 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ftc1.c                                           .::    .:/ .      .::   */
+/*   putnbr.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/10 01:26:40 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/16 15:43:44 by blorin      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/19 23:24:14 by blorin       #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/19 23:25:44 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char what_type(char *str)
+void	ft_putchar(char c)
 {
-	static int i = 0;
-	char c;
-
-	if (!str)
-		return (0);
-	while (str[i] != '%' && str[i] != '\0')
-		i++;
-	i++;
-	while (str[i] != '\0')
-	{
-		c = str[i];
-		if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' ||
-			c == 'u' || c == 'x' || c == 'X' || c == '%')
-			break ;
-		i++;
-
-	}
-	if (str[i] == '%')
-		i++;
-	return (c);
+	write(1, &c, 1);
 }
-		
-	
 
+void	ft_putnbr_unsigned(unsigned int n)
+{
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+	}
+	else
+	{
+		ft_putchar(n + '0');
+	}
+}
 
-
+void	ft_putnbr(int n)
+{
+	if (n > -2147483648)
+	{
+		if (n < 0)
+		{
+			ft_putchar('-');
+			n = n * -1;
+		}
+		if (n >= 10)
+		{
+			ft_putnbr(n / 10);
+			ft_putnbr(n % 10);
+		}
+		else
+		{
+			ft_putchar(n + '0');
+		}
+	}
+	else if (n == -2147483648)
+		write(1, "-2147483648", 11);
+}
