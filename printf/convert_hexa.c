@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 17:54:59 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 18:19:01 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/23 18:20:28 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,7 +64,7 @@ int		hexa_len_hexa(unsigned int n)
 	int i;
 
 	i = 1;
-	while (n > 16)
+	while (n >= 16)
 	{
 		n = n / 16;
 		i++;
@@ -77,7 +77,7 @@ int		hexa_len(unsigned long n)
 	int i;
 
 	i = 1;
-	while (n > 16)
+	while (n >= 16)
 	{
 		n = n / 16;
 		i++;

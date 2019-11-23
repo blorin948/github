@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 23:02:46 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 23:06:26 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/21 21:32:19 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,30 +59,33 @@ int		is_zero(char *str, int i)
 	return (0);
 }
 
-void	write_zero(char *str, int len, int *param, int i)
+int		write_zero(char *str, int len, int *param, int i)
 {
 	int zero;
+	int c;
 
+	c = 0;
 	zero = 0;
 	if (param[0] > 0)
 	{
 		zero = param[0] - len;
-		while (zero > 0)
+		while (zero-- > 0)
 		{
 			write(1, "0", 1);
-			zero--;
+			c++;
 		}
 	}
 	else
 	{
 		zero = ft_atoi(str, i);
 		zero = zero - len;
-		while (zero > 0)
+		while (zero-- > 0)
 		{
 			write(1, "0", 1);
-			zero--;
+			c++;
 		}
 	}
+	return (c);
 }
 
 int		is_space_after(char *str, int i)

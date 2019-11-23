@@ -6,22 +6,19 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/10 01:26:40 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/16 15:43:44 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/23 17:56:03 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char what_type(char *str)
+char	what_type(char *str, int i)
 {
-	static int i = 0;
-	char c;
+	char		c;
 
 	if (!str)
 		return (0);
-	while (str[i] != '%' && str[i] != '\0')
-		i++;
 	i++;
 	while (str[i] != '\0')
 	{
@@ -30,14 +27,6 @@ char what_type(char *str)
 			c == 'u' || c == 'x' || c == 'X' || c == '%')
 			break ;
 		i++;
-
 	}
-	if (str[i] == '%')
-		i++;
 	return (c);
 }
-		
-	
-
-
-

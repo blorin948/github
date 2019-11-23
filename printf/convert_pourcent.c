@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 17:38:33 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 18:00:01 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/21 18:16:07 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,14 +27,17 @@ int		is_space_after_pourcent(char *str, int i)
 
 int		add_space_after_pourcent(char *str, int i, int *param)
 {
+	int c;
+
+	c = 0;
 	if (is_valid_after(str, i, param[0]) > 0)
-		return (1);
+		return (0);
 	if (is_space_after_pourcent(str, i) > 0)
 	{
-		write_space_pourcent(str, i, param);
-		return (1);
+		c = write_space_pourcent(str, i, param);
+		return (c);
 	}
-	return (0);
+	return (c);
 }
 
 int		*assign_tab(int *tab)
@@ -68,8 +71,8 @@ int		convert_type_pourcent(char *s, va_list argue, int par)
 	if (c > 0)
 		k[1] = va_arg(argue, int);
 	k[1] = 0;
-	add_space_before_pourcent(s, i, k);
+	c = add_space_before_pourcent(s, i, k) - c;
 	write(1, "%", 1);
-	add_space_after_pourcent(s, i, k);
-	return (1);
+	c = c + 1 + add_space_after_pourcent(s, i, k);
+	return (c);
 }

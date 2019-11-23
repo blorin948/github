@@ -6,22 +6,18 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 16:33:52 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 16:57:26 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/23 18:44:30 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	write_between(char *str)
+int		write_between(char *str, int i)
 {
-	static int i = 0;
+	int				c;
 
-	while (str[i] != '%' && str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
+	c = 0;
 	if (str[i] == '%')
 	{
 		i++;
@@ -31,40 +27,51 @@ void	write_between(char *str)
 			i++;
 		i++;
 	}
+	while (str[i] != '%' && str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+		c++;
+	}
+	return (c);
 }
 
-void	write_end(char *str, int par)
+int		write_end(char *str, int par)
 {
+	int c;
+
+	c = 0;
 	while (str[par] != '\0')
 	{
 		write(1, &str[par], 1);
 		par++;
+		c++;
 	}
+	return (c);
 }
 
-int		parse_str2(char *str, int par, int c)
+int		parse_str2(char *str, int par)
 {
-	while (str[par - 1] != '%' && par > 0)
-		par--;
-	if (c > 0)
-		return (par);
-	if (str[par - 1] == '%')
+	if (par > 0)
 	{
+		par++;
 		while (str[par] != 'c' && str[par] != 's' && str[par] != 'p' &&
 			str[par] != 'd' && str[par] != 'i' && str[par] != 'u' &&
-			str[par] != 'x' && str[par] != 'X')
+			str[par] != 'x' && str[par] != 'X' && str[par] != '%')
 			par++;
 		par++;
+		return (par);
 	}
-	return (par);
+	return (0);
 }
 
-int		parse_str(char *str, int c)
+int		parse_str(char *str)
 {
 	static int	par = 0;
-	int			tmp;
+	static int	tmp = 0;
+	int			tmp2;
 
-	tmp = 0;
+	tmp2 = 0;
 	while (str[par] != '\0')
 	{
 		if (str[par] == '%')
@@ -81,8 +88,8 @@ int		parse_str(char *str, int c)
 		}
 		par++;
 	}
-	par = parse_str2(str, par, c);
-	if (c > 0)
-		return (par);
-	return (par);
+	tmp2 = parse_str2(str, tmp);
+	par = 0;
+	tmp = 0;
+	return (tmp2);
 }

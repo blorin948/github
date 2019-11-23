@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 22:57:06 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 23:02:22 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/21 21:30:12 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,13 +29,18 @@ int		ft_atoi(char *str, int i)
 	return (n);
 }
 
-void	add_precision(int len, int param)
+int		add_precision(int len, int param)
 {
+	int c;
+
+	c = 0;
 	while (len < param)
 	{
 		write(1, "0", 1);
 		len++;
+		c++;
 	}
+	return (c);
 }
 
 int		ft_intlen(int n)
@@ -65,7 +70,7 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_putstr(char *str)
+int		ft_putstr(char *str)
 {
 	int i;
 
@@ -75,4 +80,5 @@ void	ft_putstr(char *str)
 		write(1, &str[i], 1);
 		i++;
 	}
+	return (i);
 }

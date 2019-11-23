@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 23:07:02 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 23:12:46 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/21 21:32:34 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@ int		is_space(char *str, int i)
 	int preci;
 
 	preci = 0;
-	if (is_precision(str, i) > 0)
+	if (is_precision(str, i) >= 0)
 	{
 		while ((str[i] == ' ' || str[i] == '0' ||
 					str[i] == '-' || str[i] == '%'))

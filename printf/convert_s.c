@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 19:43:48 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 19:55:12 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/21 19:57:27 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,16 +26,14 @@ int		parse_string(int *c, char *s, int par, int k)
 	return (k);
 }
 
-void	convert_type_string(char *s, va_list argue, int par)
+int		convert_type_string(char *s, va_list argue, int par)
 {
 	char	*str;
 	int		i;
 	int		k[3];
 	int		c;
-	int		tmp;
 
 	assign_tab(k);
-	tmp = par;
 	c = 0;
 	i = 0;
 	k[1] = is_precision(s, par);
@@ -46,10 +44,12 @@ void	convert_type_string(char *s, va_list argue, int par)
 		k[1] = va_arg(argue, int);
 	str = va_arg(argue, char*);
 	i = ft_strlen(str);
-	add_space_before(s, i, k, tmp);
+	c = 0;
+	c = add_space_before(s, i, k, par);
 	str = is_str_valid(str);
-	write_string(str, k[1]);
-	add_space_after(s, i, k, tmp);
+	c = c + write_string(str, k[1]);
+	c = c + add_space_after(s, i, k, par);
+	return (c);
 }
 
 int		is_precision(char *str, int i)
@@ -81,19 +81,23 @@ int		is_precision(char *str, int i)
 	return (-1);
 }
 
-void	write_string(char *str, int len)
+int		write_string(char *str, int len)
 {
 	int i;
+	int c;
 
 	i = 0;
+	c = 0;
 	if (len == -1)
-		ft_putstr(str);
+		c = ft_putstr(str);
 	else if (str)
 	{
 		while (str[i] != '\0' && i < len)
 		{
 			write(1, &str[i], 1);
 			i++;
+			c++;
 		}
 	}
+	return (c);
 }

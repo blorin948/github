@@ -6,20 +6,20 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/11 04:07:38 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 23:32:38 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/21 20:12:35 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdlib.h>
 
-void	convert_type_char(char *s, va_list argue, int par)
+int		convert_type_char(char *s, va_list argue, int par)
 {
-	char z;
-	int i;
-	int k[3];
-	int tmp;
+	char	z;
+	int		i;
+	int		k[3];
+	int		tmp;
+	int		c;
 
 	tmp = par;
 	k[0] = 0;
@@ -35,9 +35,10 @@ void	convert_type_char(char *s, va_list argue, int par)
 	if (k[0] > 0)
 		k[0] = va_arg(argue, int);
 	z = va_arg(argue, int);
-	add_space_before(s, i, k, tmp);
+	c = add_space_before(s, i, k, tmp);
 	write(1, &z, 1);
-	add_space_after(s, i, k, tmp);
+	c = add_space_after(s, i, k, tmp) + c + 1;
+	return (c);
 }
 
 int		add_space_before2(char *str, int i)
@@ -60,26 +61,43 @@ int		add_space_before2(char *str, int i)
 }
 
 int		add_space_before(char *str, int len, int *param, int i)
-{	
+{
+	int c;
+
+	c = 0;
 	i = add_space_before2(str, i);
 	if (i == 0)
 		return (0);
 	if (is_valid_before(str, i, param[0]) > 0)
 	{
-		add_negative(param, len);
-		return (1);
+		add_negative(param, len, &c);
+		return (c);
 	}
 	if (is_space(str, i) > 0)
 	{
-	  write_space(str, len, param, i);
-	  add_negative(param, len);
-	  return (1);
+		c = write_space(str, len, param, i);
+		add_negative(param, len, &c);
+		return (c);
 	}
-	len = add_negative(param, len);
+	len = add_negative(param, len, &c);
 	if (is_zero(str, i) > 0)
 	{
-		write_zero(str, len, param, i);
-		return (2);
+		c = c + write_zero(str, len, param, i);
+		return (c);
 	}
-	return (0);
+	return (c);
+}
+
+int		add_precision_int(int len, int param)
+{
+	int c;
+
+	c = 0;
+	while (len < param)
+	{
+		write(1, "0", 1);
+		len++;
+		c++;
+	}
+	return (c);
 }

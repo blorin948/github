@@ -6,19 +6,21 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 19:24:48 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 19:42:47 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/23 18:41:02 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		parse_hexa(int *c, char *s, int par, int k)
+int		*parse_hexa(int *c, char *s, int par, int *k)
 {
+	if (is_precision(s, par) >= 0)
+		k[1] = is_precision(s, par);
 	while (s[par] != 'x')
 	{
 		if (s[par] == '*' && s[par - 1] != '.')
-			k++;
+			k[0]++;
 		par++;
 		if (s[par] == '*' && s[par - 1] == '.')
 			*c = 1;
@@ -26,12 +28,14 @@ int		parse_hexa(int *c, char *s, int par, int k)
 	return (k);
 }
 
-int		parse_adress(int *c, char *s, int par, int k)
+int		*parse_adress(int *c, char *s, int par, int *k)
 {
+	if (is_precision(s, par) >= 0)
+		k[1] = is_precision(s, par);
 	while (s[par] != 'p')
 	{
 		if (s[par] == '*' && s[par - 1] != '.')
-			k++;
+			k[0]++;
 		par++;
 		if (s[par] == '*' && s[par - 1] == '.')
 			*c = 1;
@@ -39,50 +43,47 @@ int		parse_adress(int *c, char *s, int par, int k)
 	return (k);
 }
 
-void	convert_type_hexa(char *s, va_list argue, int par)
+int		convert_type_hexa(char *s, va_list argue, int par)
 {
 	unsigned int	n;
 	int				i;
 	int				k[3];
 	int				c;
-	int				tmp;
+	char			*del;
 
-	tmp = par;
-	c = 0;
 	assign_tab(k);
 	i = 0;
-	if (is_precision(s, par) >= 0)
-		k[1] = is_precision(s, par);
-	k[0] = parse_hexa(&c, s, par, k[0]);
+	parse_hexa(&k[2], s, par, k);
 	if (k[0] > 0)
 		k[0] = va_arg(argue, int);
-	if (c > 0)
+	if (k[2] > 0)
 		k[1] = va_arg(argue, int);
 	n = va_arg(argue, unsigned int);
-	if (!(((is_precision(s, tmp) == 0) || (k[1] == 0 && c > 0)) && (n == 0)))
+	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && k[2] > 0)) && (n == 0)))
 		i = hexa_len_hexa(n);
-	add_space_before(s, i, k, tmp);
-	add_precision(i, k[1]);
-	if (!(((is_precision(s, tmp) == 0) || (k[1] == 0 && c > 0)) && (n == 0)))
-		ft_putstr(convert_x(n));
-	add_space_after(s, i, k, tmp);
+	c = add_space_before(s, i, k, par);
+	c = c + add_precision(i, k[1]);
+	del = convert_x(n);
+	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && k[2] > 0)) && (n == 0)))
+		c = c + ft_putstr(del);
+	c = c + add_space_after(s, i, k, par);
+	ft_free(del);
+	k[2] = 0;
+	return (c);
 }
 
-void	convert_type_adress(char *s, va_list argue, int par)
+int		convert_type_adress(char *s, va_list argue, int par)
 {
 	unsigned long	n;
 	int				i;
 	int				k[3];
 	int				c;
-	int				tmp;
+	char			*del;
 
-	tmp = par;
 	c = 0;
 	assign_tab(k);
 	i = 0;
-	if (is_precision(s, par) >= 0)
-		k[1] = is_precision(s, par);
-	k[0] = parse_adress(&c, s, par, k[0]);
+	parse_adress(&c, s, par, k);
 	if (k[0] > 0)
 		k[0] = va_arg(argue, int);
 	if (c > 0)
@@ -91,10 +92,13 @@ void	convert_type_adress(char *s, va_list argue, int par)
 	i = hexa_len(n) + 3;
 	if (i > 13)
 		i--;
-	add_space_before(s, (int)i, k, tmp);
-	add_precision(i, k[1]);
-	ft_putstr(convert_p(n));
-	add_space_after(s, i, k, tmp);
+	c = add_space_before(s, (int)i, k, par) - c;
+	c = c + add_precision(i, k[1]);
+	del = convert_p(n);
+	c = c + ft_putstr(del);
+	c = c + add_space_after(s, i, k, par);
+	ft_free(del);
+	return (c);
 }
 
 char	*is_str_valid(char *str)
@@ -105,9 +109,6 @@ char	*is_str_valid(char *str)
 	if (str)
 		return (str);
 	i = 7;
-	if (!(s = malloc(sizeof(char) * 7)))
-		return (0);
 	s = "(null)";
-	s[i] = '\0';
 	return (s);
 }

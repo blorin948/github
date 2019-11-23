@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 18:30:55 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/19 19:33:15 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/23 18:40:49 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,12 +54,14 @@ char	*ft_capitalize(char *str)
 	return (str);
 }
 
-int		parse_hexa_m(int *c, char *s, int par, int k)
+int		*parse_hexa_m(int *c, char *s, int par, int *k)
 {
+	if (is_precision(s, par) >= 0)
+		k[1] = is_precision(s, par);
 	while (s[par] != 'X')
 	{
 		if (s[par] == '*' && s[par - 1] != '.')
-			k++;
+			k[0]++;
 		par++;
 		if (s[par] == '*' && s[par - 1] == '.')
 			*c = 1;
@@ -67,31 +69,31 @@ int		parse_hexa_m(int *c, char *s, int par, int k)
 	return (k);
 }
 
-void	convert_type_hexa_m(char *s, va_list argue, int par)
+int		convert_type_hexa_m(char *s, va_list argue, int par)
 {
 	unsigned int	n;
 	int				i;
 	int				k[3];
 	int				c;
-	int				tmp;
+	char			*del;
 
 	assign_tab(k);
-	tmp = par;
 	i = 0;
-	c = 0;
-	if (is_precision(s, par) >= 0)
-		k[1] = is_precision(s, par);
-	k[0] = parse_hexa_m(&c, s, par, k[0]);
+	parse_hexa_m(&k[2], s, par, k);
 	if (k[0] > 0)
 		k[0] = va_arg(argue, int);
-	if (c > 0)
+	if (k[2] > 0)
 		k[1] = va_arg(argue, int);
 	n = va_arg(argue, unsigned int);
-	if (!(((is_precision(s, tmp) == 0) || (k[1] == 0 && c > 0)) && (n == 0)))
+	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && k[2] > 0)) && (n == 0)))
 		i = hexa_len_hexa(n);
-	add_space_before(s, i, k, tmp);
-	add_precision(i, k[1]);
-	if (!(((is_precision(s, tmp) == 0) || (k[1] == 0 && c > 0)) && (n == 0)))
-		ft_putstr(ft_capitalize(convert_x(n)));
-	add_space_after(s, i, k, tmp);
+	c = add_space_before(s, i, k, par);
+	c = c + add_precision(i, k[1]);
+	del = convert_x(n);
+	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && k[2] > 0)) && (n == 0)))
+		c = c + ft_putstr(ft_capitalize(del));
+	c = c + add_space_after(s, i, k, par);
+	ft_free(del);
+	k[2] = 0;
+	return (c);
 }

@@ -6,7 +6,7 @@
 #    By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/11/16 14:41:03 by blorin       #+#   ##    ##    #+#        #
-#    Updated: 2019/11/20 15:45:51 by blorin      ###    #+. /#+    ###.fr      #
+#    Updated: 2019/11/20 20:06:52 by blorin      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -25,6 +25,7 @@ SRC = check_flags2.c\
 	ftc1.c\
 	ftc2.c\
 	parse.c\
+	check_flags.c\
 	write_flags.c\
 	putnbr.c\
 
