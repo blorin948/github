@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 22:57:06 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/21 21:30:12 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/03 16:41:58 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,7 @@ int		add_precision(int len, int param)
 	return (c);
 }
 
-int		ft_intlen(int n)
+int		ft_intlen(long n)
 {
 	int len;
 
@@ -63,7 +63,7 @@ int		ft_strlen(char *str)
 	int i;
 
 	i = 0;
-	while (str && str[i] != '\0')
+	while (str[i] != '\0')
 		i++;
 	if (!str)
 		i = 6;

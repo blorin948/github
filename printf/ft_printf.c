@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/16 16:15:09 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/23 18:41:34 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/25 18:52:23 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,30 +72,32 @@ int		use_argue(char *s, va_list argue)
 	int				par;
 	int				z;
 	t_va_list_wrap	copy;
+	int				write;
 
 	z = 0;
+	write = 0;
 	va_copy(copy.arg, argue);
 	par = 0;
 	while (is_pourcent(s) > 0)
 	{
-		z = z + write_between(s, par);
+		write = write_between(s, write, &z);
 		par = parse_str(s);
 		c = what_type(s, par);
 		z = z + convert_all(&copy, s, par, c);
 	}
 	par = parse_str(s);
-	z = z + write_between(s, par);
+	write_between(s, write, &z);
 	return (z);
 }
 
-int		ft_printf(char *s, ...)
+int		ft_printf(const char *s, ...)
 {
 	va_list	argue;
 	int		z;
 
 	z = 0;
 	va_start(argue, s);
-	z = use_argue(s, argue);
+	z = use_argue((char *)s, argue);
 	va_end(argue);
 	return (z);
 }

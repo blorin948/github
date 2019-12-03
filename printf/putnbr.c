@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 23:24:14 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/21 17:36:04 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/03 19:24:48 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,30 +32,22 @@ void	ft_putnbr_unsigned(unsigned int n, int *c)
 	}
 }
 
-void	ft_putnbr(int n, int *c)
+void	ft_putnbr(long n, int *c)
 {
-	if (n > -2147483648)
+	if (n < 0)
 	{
-		if (n < 0)
-		{
-			ft_putchar('-');
-			n = n * -1;
-			c = c + 1;
-		}
-		if (n >= 10)
-		{
-			ft_putnbr(n / 10, c);
-			ft_putnbr(n % 10, c);
-		}
-		else
-		{
-			*c = *c + 1;
-			ft_putchar(n + '0');
-		}
+		ft_putchar('-');
+		n = n * -1;
+		c = c + 1;
 	}
-	else if (n == -2147483648)
+	if (n >= 10)
 	{
-		write(1, "-2147483648", 11);
-		c = c + 11;
+		ft_putnbr(n / 10, c);
+		ft_putnbr(n % 10, c);
+	}
+	else
+	{
+		*c = *c + 1;
+		ft_putchar(n + '0');
 	}
 }

@@ -6,38 +6,33 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 18:30:55 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/23 18:40:49 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/03 19:09:04 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*convert_x(unsigned int n)
+int		convert_x_m(unsigned int n, int *c, unsigned int a)
 {
-	unsigned int	tmp;
+	int				tmp;
 	char			*str;
-	int				i;
-	char			c;
 
 	tmp = 0;
-	i = hexa_len(n);
-	if (!(str = malloc(sizeof(i + 1))))
-		return (0);
-	i = 0;
-	while (n >= 16)
+	str = "0123456789ABCDEF";
+	if (n > 0)
 	{
+		*c = *c + 1;
+		convert_x_m(n / 16, c, a);
 		tmp = n % 16;
-		c = convert_hexa(tmp);
-		str[i] = c;
-		i++;
-		n = n / 16;
+		write(1, &str[tmp], 1);
 	}
-	c = convert_hexa(n);
-	str[i] = c;
-	str[i + 1] = '\0';
-	str = ft_strrev(str);
-	return (str);
+	if (a == 0)
+	{
+		write(1, "0", 1);
+		*c = *c + 1;
+	}
+	return (1);
 }
 
 char	*ft_capitalize(char *str)
@@ -75,7 +70,6 @@ int		convert_type_hexa_m(char *s, va_list argue, int par)
 	int				i;
 	int				k[3];
 	int				c;
-	char			*del;
 
 	assign_tab(k);
 	i = 0;
@@ -89,11 +83,9 @@ int		convert_type_hexa_m(char *s, va_list argue, int par)
 		i = hexa_len_hexa(n);
 	c = add_space_before(s, i, k, par);
 	c = c + add_precision(i, k[1]);
-	del = convert_x(n);
 	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && k[2] > 0)) && (n == 0)))
-		c = c + ft_putstr(ft_capitalize(del));
+		convert_x_m(n, &c, n);
 	c = c + add_space_after(s, i, k, par);
-	ft_free(del);
 	k[2] = 0;
 	return (c);
 }

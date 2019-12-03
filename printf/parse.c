@@ -6,18 +6,21 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 16:33:52 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/23 18:44:30 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/25 18:47:21 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		write_between(char *str, int i)
+int		write_between(char *str, int i, int *c)
 {
-	int				c;
-
-	c = 0;
+	while (str[i] != '%' && str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+		*c = *c + 1;
+	}
 	if (str[i] == '%')
 	{
 		i++;
@@ -27,13 +30,7 @@ int		write_between(char *str, int i)
 			i++;
 		i++;
 	}
-	while (str[i] != '%' && str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++;
-		c++;
-	}
-	return (c);
+	return (i);
 }
 
 int		write_end(char *str, int par)

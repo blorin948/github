@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 19:55:49 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/21 21:29:11 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/03 19:24:00 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,11 +30,11 @@ int		*parse_unsigned(int *c, char *s, int par, int *k)
 
 int		convert_type_unsigned(char *s, va_list argue, int par)
 {
-	int n;
-	int i;
-	int k[3];
-	int c;
-	int z;
+	unsigned long	n;
+	int				i;
+	int				k[3];
+	int				c;
+	int				z;
 
 	z = 0;
 	assign_tab(k);
@@ -45,9 +45,9 @@ int		convert_type_unsigned(char *s, va_list argue, int par)
 		k[0] = va_arg(argue, int);
 	if (c > 0)
 		k[1] = va_arg(argue, int);
-	n = va_arg(argue, int);
+	n = va_arg(argue, unsigned long);
 	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && c > 0)) && (n == 0)))
-		i = ft_intlen(n);
+		i = ft_unsigned_len(n);
 	z = add_space_before(s, i, k, par);
 	z = z + add_precision(i, k[1]);
 	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && c > 0)) && (n == 0)))
@@ -71,7 +71,7 @@ int		*parse_int(int *c, char *s, int par, int *k)
 	return (k);
 }
 
-int		convert_type_int2(int n, int c)
+int		convert_type_int2(long n, int c)
 {
 	int z;
 
@@ -85,11 +85,11 @@ int		convert_type_int2(int n, int c)
 
 int		convert_type_int(char *s, va_list argue, int par)
 {
-	int n;
-	int i;
-	int k[3];
-	int c;
-	int z;
+	long	n;
+	int		i;
+	int		k[3];
+	int		c;
+	int		z;
 
 	assign_tab(k);
 	c = 0;

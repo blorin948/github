@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 19:24:48 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/23 18:41:02 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/03 19:23:06 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,11 +63,9 @@ int		convert_type_hexa(char *s, va_list argue, int par)
 		i = hexa_len_hexa(n);
 	c = add_space_before(s, i, k, par);
 	c = c + add_precision(i, k[1]);
-	del = convert_x(n);
 	if (!(((is_precision(s, par) == 0) || (k[1] == 0 && k[2] > 0)) && (n == 0)))
-		c = c + ft_putstr(del);
+		convert_x(n, &c, n);
 	c = c + add_space_after(s, i, k, par);
-	ft_free(del);
 	k[2] = 0;
 	return (c);
 }
@@ -89,15 +87,12 @@ int		convert_type_adress(char *s, va_list argue, int par)
 	if (c > 0)
 		k[1] = va_arg(argue, int);
 	n = va_arg(argue, unsigned long);
-	i = hexa_len(n) + 3;
-	if (i > 13)
-		i--;
-	c = add_space_before(s, (int)i, k, par) - c;
+	i = hexa_len(n) + 2;
+	c = add_space_before(s, (int)i, k, par) - c + 2;
 	c = c + add_precision(i, k[1]);
-	del = convert_p(n);
-	c = c + ft_putstr(del);
+	write(1, "0x", 2);
+	convert_x_p(n, &c, n);
 	c = c + add_space_after(s, i, k, par);
-	ft_free(del);
 	return (c);
 }
 

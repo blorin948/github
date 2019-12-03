@@ -6,7 +6,7 @@
 /*   By: blorin <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/19 19:43:48 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/21 19:57:27 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/03 17:05:01 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,10 +43,10 @@ int		convert_type_string(char *s, va_list argue, int par)
 	if (c > 0)
 		k[1] = va_arg(argue, int);
 	str = va_arg(argue, char*);
+	str = is_str_valid(str);
 	i = ft_strlen(str);
 	c = 0;
 	c = add_space_before(s, i, k, par);
-	str = is_str_valid(str);
 	c = c + write_string(str, k[1]);
 	c = c + add_space_after(s, i, k, par);
 	return (c);
@@ -70,8 +70,6 @@ int		is_precision(char *str, int i)
 			tmp = i;
 		}
 		i++;
-		if (k > 0 && str[i] == '*')
-			k--;
 	}
 	if (k > 0)
 	{
@@ -88,7 +86,7 @@ int		write_string(char *str, int len)
 
 	i = 0;
 	c = 0;
-	if (len == -1)
+	if (len <= -1)
 		c = ft_putstr(str);
 	else if (str)
 	{
