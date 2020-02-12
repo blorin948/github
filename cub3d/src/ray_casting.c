@@ -6,7 +6,7 @@
 /*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/31 21:30:21 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 22:06:53 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/12 19:16:10 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,10 +27,10 @@ void	ray_cast_skybox(t_storage *ptr)
 		ptr->mvfront += 45;
 	if (ptr->move.movedown == 1)
 		ptr->mvfront -= 45;
-	if (ptr->mvfront > ptr->t_img.imgSoly)
+	if (ptr->mvfront > ptr->t_img.imgsoly)
 		ptr->mvfront = 0;
 	if (ptr->mvfront < 0)
-		ptr->mvfront = ptr->t_img.imgSoly;
+		ptr->mvfront = ptr->t_img.imgsoly;
 }
 
 int		*ray_cast2(t_storage *ptr, int *img)
@@ -76,7 +76,7 @@ void	ray_cast3(t_storage *ptr, int *img)
 void	ray_cast(t_storage *ptr)
 {
 	int *img;
-	
+
 	ptr->t_img.img_ptr = mlx_new_image(ptr->mlx_ptr, ptr->resox, ptr->resoy);
 	img = (int*)mlx_get_data_addr(ptr->t_img.img_ptr,
 	&ptr->t_img.bpp, &ptr->t_img.size_line, &ptr->t_img.endian);
@@ -107,13 +107,13 @@ void	ray_cast_init(t_storage *ptr, int x)
 	ptr->ray.raydirx = ptr->dirx - ptr->planex * ptr->ray.camx;
 	ptr->ray.raydiry = ptr->diry - ptr->planey * ptr->ray.camx;
 	ptr->mapx = (int)ptr->ray.rayx;
-	ptr->mapY = (int)ptr->ray.rayy;
+	ptr->mapy = (int)ptr->ray.rayy;
 	dda(ptr);
 	dda2(ptr);
 	if (ptr->ray.side == 0)
 		ptr->ray.walldist = (ptr->mapx - ptr->ray.rayx +
 		(1 - ptr->ray.stepx) / 2) / ptr->ray.raydirx;
 	else
-		ptr->ray.walldist = (ptr->mapY - ptr->ray.rayy +
+		ptr->ray.walldist = (ptr->mapy - ptr->ray.rayy +
 		(1 - ptr->ray.stepy) / 2) / ptr->ray.raydiry;
 }

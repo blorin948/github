@@ -6,7 +6,7 @@
 /*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/03 01:34:49 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 20:21:31 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/11 23:34:42 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,7 +62,7 @@ int		check_argue(t_storage *ptr, int ac, char **av)
 	{
 		if (ac == 3)
 		{
-			if (ft_strcmp(av[2], "-save") != 0)
+			if (ft_strcmp(av[2], "--save") != 0)
 				return (error(ptr, "arguements"));
 			else
 			{

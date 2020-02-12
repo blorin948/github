@@ -6,7 +6,7 @@
 /*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/02 22:10:13 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 20:21:19 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/11 23:56:12 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ int		check_reso(char *line, t_storage *ptr, t_check *checkv)
 	count = 0;
 	if (line[0] != 'R')
 		return (0);
-	while (((line[i] <= '0' || line[i] >= '9')) && line[i] != 45)
+	while (((line[i] < '0' || line[i] > '9')) && line[i] != 45)
 		i++;
 	count = ft_atoi(line, &i);
 	ptr->resox = count;

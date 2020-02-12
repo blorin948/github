@@ -6,7 +6,7 @@
 /*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/02 20:26:25 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 20:21:29 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/12 19:16:10 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@ int		*put_pixel(t_storage *ptr, int start, int lineheight, int *img)
 	int id;
 
 	id = 0;
-	if (ptr->tab[ptr->mapY][ptr->mapx] == 3 && ptr->move.door == 0)
+	if (ptr->tab[ptr->mapy][ptr->mapx] == 3 && ptr->move.door == 0)
 		id = 4;
 	else if (ptr->ray.side == 0 && ptr->ray.raydirx < 0)
 		id = 0;

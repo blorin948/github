@@ -6,7 +6,7 @@
 /*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/03 00:19:30 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 20:21:21 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/12 19:16:10 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,13 +59,13 @@ void	dda(t_storage *ptr)
 	if (ptr->ray.raydiry < 0)
 	{
 		ptr->ray.stepy = -1;
-		ptr->ray.sidedisty = (ptr->ray.rayy - ptr->mapY) *
+		ptr->ray.sidedisty = (ptr->ray.rayy - ptr->mapy) *
 		ptr->ray.deltadisty;
 	}
 	else
 	{
 		ptr->ray.stepy = 1;
-		ptr->ray.sidedisty = (ptr->mapY + 1.0 - ptr->ray.rayy) *
+		ptr->ray.sidedisty = (ptr->mapy + 1.0 - ptr->ray.rayy) *
 		ptr->ray.deltadisty;
 	}
 }
@@ -84,11 +84,11 @@ void	dda2(t_storage *ptr)
 		else
 		{
 			ptr->ray.sidedisty += ptr->ray.deltadisty;
-			ptr->mapY += ptr->ray.stepy;
+			ptr->mapy += ptr->ray.stepy;
 			ptr->ray.side = 1;
 		}
-		if (ptr->tab[ptr->mapY][ptr->mapx] == 1 || ((ptr->tab[ptr->mapY][ptr->
-		mapx] == 4 && ptr->move.door == 0) || (ptr->tab[ptr->mapY][ptr->mapx]
+		if (ptr->tab[ptr->mapy][ptr->mapx] == 1 || ((ptr->tab[ptr->mapy][ptr->
+		mapx] == 4 && ptr->move.door == 0) || (ptr->tab[ptr->mapy][ptr->mapx]
 		== 3 && ptr->move.door == 0)))
 		{
 			ptr->ray.hit = 1;

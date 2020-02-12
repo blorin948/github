@@ -6,16 +6,12 @@
 #    By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2020/02/05 20:57:52 by blorin       #+#   ##    ##    #+#        #
-#    Updated: 2020/02/11 22:58:22 by blorin      ###    #+. /#+    ###.fr      #
+#    Updated: 2020/02/12 19:22:05 by blorin      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
-MLX = -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -L mlx/
-
-NAME = Cub3D
-
-SRCS = src/bmp.c\
+SRC = src/bmp.c\
 	src/check_color.c\
 	src/check_cub.c\
 	src/check_cub2.c\
@@ -34,26 +30,38 @@ SRCS = src/bmp.c\
 	src/sprite.c\
 	src/tab.c\
 
-OBJSRCS = $(SRCS:.c=.o)
+OBJS = ${SRC:.c=.o}
 
-.c.o:
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+OBJBS = ${SRCB:.c=.o} ${SRC:.c=.o}
 
-FLAGS = -Wall -Wextra -Werror
+NAME = Cub3d
+
+RM = rm -f
 
 CC = gcc
 
-$(NAME) : $(OBJSRCS)
-	rm -rf Cub3D
-	${CC} $(OBJSRCS) $(MLX) libft.a -o $(NAME)
+HEADERS = cub3d.h get_next_line.h
 
-all : $(NAME)
+CFLAGS = -o -Wall -Wextra -Werror
 
-clean :
-	rm -rf $(OBJSRCS)
+all:	${NAME}
 
-fclean : clean
-	rm -rf $(NAME)
-	rm -rf save.bmp
+$(OBJS): ${HEADERS}
 
-re : fclean all
+$(OBJBS): ${HEADERS}
+
+.c.o:
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+
+$(NAME):	${OBJS}
+	gcc ${NAME} ${OBJS}
+
+fclean:		clean
+	${RM} ${NAME}
+
+clean:
+	${RM} *.o
+
+re: fclean all
+
+.PHONY:		all clean fclean re

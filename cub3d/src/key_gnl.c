@@ -6,7 +6,7 @@
 /*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/03 00:59:46 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 22:11:16 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/11 23:47:34 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,9 +35,7 @@ int		gnl(char *av, t_storage *ptr, t_check *checkv)
 			ptr->map = ft_strjoin(ptr->map, line);
 			ptr->linecount++;
 		}
-		ft_free(line);
 	}
-	ft_free(line);
 	if (ptr->nbrcount == 0 || ptr->linecount == 0)
 		return (error(ptr, "map"));
 	return (0);

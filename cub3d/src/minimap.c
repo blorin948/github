@@ -6,7 +6,7 @@
 /*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/02/02 19:46:25 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 20:21:46 by blorin      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/12 19:15:12 by blorin      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,8 +97,8 @@ int		*image(t_storage *ptr, int *img)
 
 	winy = ptr->resoy / 6;
 	winx = ptr->resox / 6;
-	ptr->t_img.cubSizey = winy / 6;
-	ptr->t_img.cubSizex = winx / 6;
+	ptr->t_img.cubsizey = winy / 6;
+	ptr->t_img.cubsizex = winx / 6;
 	img = white_edge(ptr, winx, winy, img);
 	img = create_minimap(ptr, winx, winy, img);
 	if (winx > 2 && winy > 2)
