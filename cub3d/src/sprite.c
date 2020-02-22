@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   sprite.c                                         .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/31 22:54:04 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 21:23:45 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sprite.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:58:34 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:14:52 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -22,20 +21,20 @@ void	sort_sprite(t_storage *ptr, int count, double tmpy)
 	count = 0;
 	while (count < ptr->spritec - 1)
 	{
-		distance = ((ptr->posx - ptr->spriteposx[count]) * (ptr->posx -
-		ptr->spriteposx[count]) + (ptr->posy -
-		ptr->spriteposy[count]) * (ptr->posy - ptr->spriteposy[count]));
-		dist = ((ptr->posx - ptr->spriteposx[count + 1]) * (ptr->posx -
-		ptr->spriteposx[count + 1]) + (ptr->posy - ptr->spriteposy[count + 1])
-		* (ptr->posy - ptr->spriteposy[count + 1]));
+		distance = ((ptr->posx - ptr->spritet[count].x) * (ptr->posx -
+		ptr->spritet[count].x) + (ptr->posy -
+		ptr->spritet[count].y) * (ptr->posy - ptr->spritet[count].y));
+		dist = ((ptr->posx - ptr->spritet[count + 1].x) * (ptr->posx -
+		ptr->spritet[count + 1].x) + (ptr->posy - ptr->spritet[count + 1].y)
+		* (ptr->posy - ptr->spritet[count + 1].y));
 		if (distance > dist)
 		{
-			tmpy = ptr->spriteposy[count + 1];
-			tmpx = ptr->spriteposx[count + 1];
-			ptr->spriteposx[count + 1] = ptr->spriteposx[count];
-			ptr->spriteposy[count + 1] = ptr->spriteposy[count];
-			ptr->spriteposx[count] = tmpx;
-			ptr->spriteposy[count] = tmpy;
+			tmpy = ptr->spritet[count + 1].y;
+			tmpx = ptr->spritet[count + 1].x;
+			ptr->spritet[count + 1].x = ptr->spritet[count].x;
+			ptr->spritet[count + 1].y = ptr->spritet[count].y;
+			ptr->spritet[count].x = tmpx;
+			ptr->spritet[count].y = tmpy;
 			count = 0;
 		}
 		count++;
@@ -44,8 +43,8 @@ void	sort_sprite(t_storage *ptr, int count, double tmpy)
 
 void	sprite2(t_storage *ptr)
 {
-	ptr->sprite.spritex = ptr->spriteposx[ptr->sprite.count] - ptr->posx;
-	ptr->sprite.spritey = ptr->spriteposy[ptr->sprite.count] - ptr->posy;
+	ptr->sprite.spritex = ptr->spritet[ptr->sprite.count].x - ptr->posx;
+	ptr->sprite.spritey = ptr->spritet[ptr->sprite.count].y - ptr->posy;
 	ptr->sprite.invdet = 1.0 / (ptr->planex * ptr->diry - ptr->dirx *
 			ptr->planey);
 	ptr->sprite.transfox = ptr->sprite.invdet * (-ptr->diry *
@@ -80,7 +79,7 @@ void	sprite3(t_storage *ptr)
 int		*sprite4(t_storage *ptr, int *img)
 {
 	ptr->sprite.texx = (256 * (ptr->sprite.stripe - (-ptr->sprite.spritewidth /
-	2 + ptr->sprite.spritescreenx)) * ptr->texwidth /
+	2 + ptr->sprite.spritescreenx)) * ptr->text[5].x /
 	ptr->sprite.spritewidth) / 256;
 	if (ptr->sprite.transfoy > 0 && ptr->sprite.stripe > 0 &&
 	ptr->sprite.stripe <
@@ -91,12 +90,12 @@ int		*sprite4(t_storage *ptr, int *img)
 		{
 			ptr->sprite.size = (ptr->sprite.y) * 256 - ptr->resoy * 128
 			+ ptr->sprite.spriteheight * 128;
-			ptr->sprite.texy = ((ptr->sprite.size * ptr->texheight) /
+			ptr->sprite.texy = ((ptr->sprite.size * ptr->text[5].y) /
 			ptr->sprite.spriteheight) / 256;
-			if (ptr->text[5].data[ptr->texwidth * ptr->sprite.texy
+			if (ptr->text[5].data[ptr->text[5].x * ptr->sprite.texy
 			+ ptr->sprite.texx] > 1)
 				img[ptr->sprite.y * ptr->resox + ptr->sprite.stripe] = ptr->
-				text[5].data[ptr->texwidth *
+				text[5].data[ptr->text[5].x *
 				ptr->sprite.texy + ptr->sprite.texx];
 		}
 	}
@@ -112,7 +111,7 @@ int		*sprite(t_storage *ptr, int *img)
 	count = 0;
 	if (ptr->spritec == 0)
 		return (img);
-	ptr->sprite.count = ptr->spritec;
+	ptr->sprite.count = ptr->spritec - 1;
 	sort_sprite(ptr, count, tmpy);
 	while (ptr->sprite.count >= 0)
 	{

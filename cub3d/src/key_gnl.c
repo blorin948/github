@@ -1,25 +1,49 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   key_gnl.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/03 00:59:46 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 23:47:34 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_gnl.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:28:34 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:18:33 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+int		gnl2(t_storage *ptr, char *av)
+{
+	int		fd;
+	char	*ok;
+	int		i;
+
+	if (ptr->nbrcount == 0 || ptr->linecount == 0)
+		return (error(ptr, "map"));
+	i = 0;
+	fd = open(av, O_RDONLY);
+	ok = NULL;
+	if (!(ptr->map = malloc(sizeof(char) * (ptr->linecount *
+	ptr->nbrcount + 1))))
+		return (error(ptr, "malloc"));
+	while (get_next_line(fd, &ok))
+	{
+		if (ok[0] == '1')
+			i = ft_strcpy_p(ptr, i, ok);
+		ft_free(ok);
+	}
+	ft_free(ok);
+	close(fd);
+	return (0);
+}
 
 int		gnl(char *av, t_storage *ptr, t_check *checkv)
 {
 	int		fd;
 	char	*line;
 	int		t;
+	char	*tmp;
 
-	t = 0;
 	fd = open(av, O_RDONLY);
 	if (fd <= 0)
 		return (error(ptr, ".cub file"));
@@ -30,14 +54,15 @@ int		gnl(char *av, t_storage *ptr, t_check *checkv)
 		{
 			if (ptr->nbrcount == 0)
 				ptr->nbrcount = ft_strlen(line);
-			if (ptr->nbrcount != ft_strlen(line))
+			if (ptr->nbrcount != (int)ft_strlen(line))
 				return (error(ptr, "map"));
-			ptr->map = ft_strjoin(ptr->map, line);
 			ptr->linecount++;
 		}
+		ft_free(line);
 	}
-	if (ptr->nbrcount == 0 || ptr->linecount == 0)
-		return (error(ptr, "map"));
+	ft_free(line);
+	close(fd);
+	gnl2(ptr, av);
 	return (0);
 }
 
@@ -78,8 +103,8 @@ int		key(int key, t_storage *ptr)
 		ptr->tab[ptr->doorposy[0]][ptr->doorposx[0]] == 3)
 			ptr->tab[ptr->doorposy[0]][ptr->doorposx[0]] = 0;
 		else if (key == 49 && ptr->tab[ptr->doorposy[0]][ptr->doorposx[0]] == 0
-		&& (int)ptr->posy != ptr->doorposy[0] && (posy < 2 && posy > -2) &&
-		(posx < 2 && posx > -2))
+		&& (abs(ptr->doorposy[0] + ptr->doorposx[0]) != abs(((int)ptr->posx +
+		(int)ptr->posy))) && (posy < 2 && posy > -2) && (posx < 2 && posx > -2))
 			ptr->tab[ptr->doorposy[0]][ptr->doorposx[0]] = 3;
 	}
 	key2(key, ptr);

@@ -1,75 +1,64 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   get_next_line.c                                  .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/07 23:06:23 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 21:58:08 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/22 00:05:37 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:17:10 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../get_next_line.h"
+#include "../cub3d.h"
 
-char	*get_out(char *save)
+char	*ft_free(char *str)
 {
-	int		i;
-	int		a;
-	char	*str;
-
-	if (save == NULL)
-		return (0);
-	a = 0;
-	i = 0;
-	while (save[i] != '\n' && save[i] != '\0')
-		i++;
-	while (save[a] != '\0')
-		a++;
-	if (!(str = malloc(sizeof(char) * (a - i + 1))))
-		return (0);
-	i++;
-	a = 0;
-	while (save[i] != '\0')
-		str[a++] = save[i++];
-	str[a] = '\0';
-	ft_free(save);
-	return (str);
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
+	return (NULL);
 }
 
-int		check_error(int fd, char **line)
+char	*ft_get_line(int fd, int *ret, char *rest)
 {
-	if (line == NULL || fd == -1)
-		return (-1);
-	return (1);
+	char buffer[101];
+	char *rest2;
+
+	*ret = read(fd, buffer, 100);
+	buffer[*ret] = '\0';
+	rest2 = rest;
+	rest = ft_strjoin(rest, buffer);
+	ft_free(rest2);
+	return (rest);
 }
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*save = NULL;
-	char		buf[100002];
+	static char *rest = NULL;
+	char		*line2;
+	char		*str;
 	int			ret;
-	char		*tmp;
 
-	ret = 0;
-	if (check_error(fd, line) < 0)
+	ret = 1;
+	if (!line || fd < 0 || (rest == NULL && (!(rest = ft_strdup("")))))
 		return (-1);
-	while ((get_n(save) == 0) && (ret = read(fd, buf, 100000)) > 0)
+	while (ret)
 	{
-		buf[ret] = '\0';
-		tmp = save;
-		save = ft_strjoin(save, buf);
-		ft_free(tmp);
-		if (get_n(save) == 1)
-			break ;
+		if ((str = ft_strchr(rest, '\n')) && str != 0)
+		{
+			*str = '\0';
+			*line = ft_strdup(rest);
+			line2 = rest;
+			rest = ft_strdup(str + 1);
+			ft_free(line2);
+			return (1);
+		}
+		rest = ft_get_line(fd, &ret, rest);
 	}
-	*line = ft_strdup_n(save);
-	if (get_n(save) == 1)
-	{
-		save = get_out(save);
-		return (1);
-	}
-	ft_free(save);
+	*line = ft_strdup(rest);
 	return (0);
 }

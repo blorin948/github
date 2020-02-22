@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   tab.c                                            .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/02 20:30:39 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 22:14:59 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tab.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:59:20 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:20:03 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -34,9 +33,7 @@ int		sprite_door(t_storage *ptr)
 	}
 	if (ptr->spritec > 0)
 	{
-		if (!(ptr->spriteposx = malloc(sizeof(double) * ptr->spritec)))
-			return (0);
-		if (!(ptr->spriteposy = malloc(sizeof(double) * ptr->spritec)))
+		if (!(ptr->spritet = malloc(sizeof(t_sprite_s) * ptr->spritec)))
 			return (0);
 	}
 	return (1);
@@ -49,7 +46,7 @@ int		malloc_tab(t_storage *ptr)
 	i = 0;
 	if (!(ptr->tab = malloc(sizeof(int *) * ptr->linecount)))
 		return (0);
-	while (i < ptr->nbrcount)
+	while (i < ptr->linecount)
 	{
 		if (!(ptr->tab[i] = malloc(sizeof(int) * ptr->nbrcount)))
 			return (0);
@@ -74,8 +71,8 @@ void	create_tab2(t_storage *ptr, int i, int *sprite, int *c)
 		}
 		if (ptr->tab[i][a] == 2)
 		{
-			ptr->spriteposx[*sprite] = a + 0.5;
-			ptr->spriteposy[*sprite] = i + 0.5;
+			ptr->spritet[*sprite].x = (double)a + 0.5;
+			ptr->spritet[*sprite].y = (double)i + 0.5;
 			*sprite = *sprite + 1;
 		}
 		a++;

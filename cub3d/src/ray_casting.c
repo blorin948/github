@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ray_casting.c                                    .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/31 21:30:21 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/12 19:16:10 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_casting.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:59:12 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:19:20 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -61,7 +60,8 @@ void	ray_cast3(t_storage *ptr, int *img)
 	int *tmp;
 
 	img = sprite(ptr, img);
-	img = image(ptr, img);
+	if (!(ptr->resox < 15 || ptr->resoy < 15))
+		img = image(ptr, img);
 	mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr, ptr->t_img.img_ptr,
 	0, 0);
 	if (ptr->save > 0)

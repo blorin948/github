@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   draw.c                                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/02 20:26:25 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/12 19:16:10 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/22 15:04:35 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:16:58 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -54,4 +53,19 @@ int		*draw_wall(t_storage *ptr, int start, int lineheight, int *img)
 	while (start++ < ptr->ray.drawend)
 		img = put_pixel(ptr, start, lineheight, img);
 	return (img);
+}
+
+int		ft_strcpy_p(t_storage *ptr, int i, char *line)
+{
+	int k;
+
+	k = 0;
+	while (line[k])
+	{
+		ptr->map[i] = line[k];
+		i++;
+		k++;
+	}
+	ptr->map[i] = '\0';
+	return (i);
 }

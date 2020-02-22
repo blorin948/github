@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   minimap.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/02 19:46:25 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/12 19:15:12 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:28:46 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:15:15 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -101,17 +100,14 @@ int		*image(t_storage *ptr, int *img)
 	ptr->t_img.cubsizex = winx / 6;
 	img = white_edge(ptr, winx, winy, img);
 	img = create_minimap(ptr, winx, winy, img);
-	if (winx > 2 && winy > 2)
-	{
-		img[(winy / 2) * ptr->resox + (winx / 2)] = 0xFF0000;
-		img[((winy / 2) + 1) * ptr->resox + ((winx / 2) + 1)] = 0xFF0000;
-		img[(winy / 2) * ptr->resox + ((winx / 2) + 1)] = 0xFF0000;
-		img[((winy / 2) + 1) * ptr->resox + (winx / 2)] = 0xFF0000;
-		img[((winy / 2) - 1) * ptr->resox + ((winx / 2) - 1)] = 0xFF0000;
-		img[(winy / 2) * ptr->resox + ((winx / 2) - 1)] = 0xFF0000;
-		img[((winy / 2) - 1) * ptr->resox + (winx / 2)] = 0xFF0000;
-		img[((winy / 2) + 1) * ptr->resox + ((winx / 2) - 1)] = 0xFF0000;
-		img[((winy / 2) - 1) * ptr->resox + (winx / 2) + 1] = 0xFF0000;
-	}
+	img[(winy / 2) * ptr->resox + (winx / 2)] = 0xFF0000;
+	img[((winy / 2) + 1) * ptr->resox + ((winx / 2) + 1)] = 0xFF0000;
+	img[(winy / 2) * ptr->resox + ((winx / 2) + 1)] = 0xFF0000;
+	img[((winy / 2) + 1) * ptr->resox + (winx / 2)] = 0xFF0000;
+	img[((winy / 2) - 1) * ptr->resox + ((winx / 2) - 1)] = 0xFF0000;
+	img[(winy / 2) * ptr->resox + ((winx / 2) - 1)] = 0xFF0000;
+	img[((winy / 2) - 1) * ptr->resox + (winx / 2)] = 0xFF0000;
+	img[((winy / 2) + 1) * ptr->resox + ((winx / 2) - 1)] = 0xFF0000;
+	img[((winy / 2) - 1) * ptr->resox + (winx / 2) + 1] = 0xFF0000;
 	return (img);
 }

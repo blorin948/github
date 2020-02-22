@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/03 01:41:56 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/12 18:34:23 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:59:03 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:17:23 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -29,8 +28,6 @@ int		ft_start(int ac, char **av, t_storage *ptr, t_check *checkv)
 	if (check_argue(ptr, ac, av) != 1)
 		return (0);
 	gnl(av[1], ptr, checkv);
-	if (ptr->error > 0)
-		return (0);
 	if ((checkv->ea != 1 || checkv->no != 1 || checkv->we != 1 || checkv->so
 	!= 1 || checkv->f != 1 || (checkv->c != 1 && ptr->che.sky != 1) || checkv->f
 	!= 1 || checkv->sprite != 1 || checkv->r != 1))

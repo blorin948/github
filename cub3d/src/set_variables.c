@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   set_variables.c                                  .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/03 00:10:22 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 22:58:51 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_variables.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:29:02 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:18:52 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -75,6 +74,7 @@ void	set_val(t_storage *ptr)
 	}
 	ptr->move.mspeed = 0.10;
 	ptr->move.rspeed = 0.10;
+	set_val2(ptr);
 }
 
 int		error(t_storage *ptr, char *error)
@@ -86,25 +86,7 @@ int		error(t_storage *ptr, char *error)
 
 int		ft_exit(t_storage *ptr)
 {
-	int i;
-
-	i = 0;
-	ft_free(ptr->map);
-	ft_free(ptr->texture.nord);
-	ft_free(ptr->texture.sud);
-	ft_free(ptr->texture.ouest);
-	ft_free(ptr->texture.est);
-	ft_free(ptr->buffer);
-	ft_free(ptr->doorposx);
-	ft_free(ptr->doorposy);
-	ft_free(ptr->spriteposx);
-	ft_free(ptr->spriteposy);
-	while (i < ptr->linecount)
-	{
-		if (ptr->tab)
-			ft_free(ptr->tab[i]);
-		i++;
-	}
+	ptr->ray.x = 0;
 	exit(0);
 	return (0);
 }

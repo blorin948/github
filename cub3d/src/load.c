@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   load.c                                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: blorin <blorin@student.le-101.fr>          +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/03 00:36:51 by blorin       #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/11 20:21:41 by blorin      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: blorin <blorin@student.le-101.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 23:29:24 by blorin            #+#    #+#             */
+/*   Updated: 2020/02/22 15:17:19 by blorin           ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
@@ -31,7 +30,7 @@ int		load2(t_storage *ptr)
 	&ptr->text[4].bpp, &ptr->text[4].sizeline, &ptr->text[4].endian);
 	}
 	if (!(ptr->text[5].img = mlx_xpm_file_to_image(ptr->mlx_ptr,
-	ptr->texture.sprite, &ptr->texwidth, &ptr->texheight)))
+	ptr->texture.sprite, &ptr->text[5].x, &ptr->text[5].y)))
 		return (error(ptr, "texture"));
 	ptr->text[5].data = (int*)mlx_get_data_addr(ptr->text[5].img,
 	&ptr->text[5].bpp, &ptr->text[5].sizeline, &ptr->text[5].endian);
